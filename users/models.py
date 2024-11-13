@@ -4,7 +4,7 @@ from django.db import models
 class User(models.Model):
     username = models.CharField(max_length=100, unique=True)
     email = models.EmailField(unique=True)
-    role = models.CharField(max_length=20, default='guest')
+    role = models.CharField(max_length=10, default='guest')
     password = models.CharField(max_length=100)
     created_at = models.DateTimeField(auto_now_add=True)
 
