@@ -4,8 +4,9 @@ A blog post project built in Django
 
 ## Features
 
-- Add, edit, delete, and view todos
-- User-friendly interface
+- Authors create, manage and delete their posts.
+- Other users, comment, react on posts
+- User Graphical Interface with basic js and css bootstrap
 - Built with modern js, bootstrap and django(python)
 
 ## Technology Stack
