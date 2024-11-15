@@ -20,6 +20,7 @@
         
         <!-- Bootstrap Css -->
         <link href="{% static 'css/bootstrap.min.css' %}" id="bootstrap-style" rel="stylesheet" type="text/css">
+        <link href="{% static 'css/custom.css' %}" rel="stylesheet" type="text/css">
         <!-- Icons Css -->
         <link href="{% static 'css/icons.min.css' %}" rel="stylesheet" type="text/css">
         <!-- App Css-->
@@ -27,11 +28,11 @@
 
     </head>
 
-    <body data-topbar="light" data-layout="horizontal">
+    <body data-topbar="dark" data-layout="horizontal" >
         <!-- Begin page -->
-        <div id="layout-wrapper">
+        <div id="layout-wrapper" >
 
-            <header id="page-topbar">
+            <header id="page-topbar" style="background-color: #222831;">
                 <div class="navbar-header">
                     <div class="d-flex">
                         <!-- LOGO -->
@@ -63,9 +64,9 @@
 
                     <div class="d-flex align-items-center mt-3">
                     {% if request.session.user_id %}
-                        <p class="fs-3">Welcome Blog Master {{ request.session.username }}</p>
+                        <p class="fs-4">Welcome back {{ request.session.username }}</p>
                     {% else %}
-                        <p class="fs-4 ">Blog Maseter InkWell</p>
+                        {% comment %} <p class="fs-4 ">Blog Maseter InkWell</p> {% endcomment %}
                     {% endif %}
                     </div>
                     
@@ -183,7 +184,7 @@
                 </div>
             </header>
 
-            <div class="topnav">
+            <div class="topnav" style="background-color: #222831;">
                 <div class="container-fluid">
                     <nav class="navbar navbar-light navbar-expand-lg topnav-menu">
             
@@ -191,19 +192,22 @@
                             <ul class="navbar-nav me-auto">
                                 <li class="nav-item">
                                     <a class="nav-link" href="{% url 'home'%}">
-                                        <i class="ti-home me-2"></i>Home
+                                        {% comment %} <i class="ti-home me-2"></i> {% endcomment %}
+                                        Home
                                     </a>
                                 </li>
             
                                 <li class="nav-item dropdown mega-dropdown">
                                     <a class="nav-link dropdown-toggle arrow-none" href="#" id="topnav-uielement" role="button">
-                                        <i class="ti-package me-2"></i>Blog Post
+                                        {% comment %} <i class="ti-package me-2"></i> {% endcomment %}
+                                        Blog Post
                                     </a>
                                 </li>
             
                                 <li class="nav-item dropdown mega-dropdown">
                                     <a class="nav-link dropdown-toggle arrow-none" href="#" id="topnav-auth" role="button">
-                                        <i class="ti-archive me-2"></i>Categories
+                                        {% comment %} <i class="ti-archive me-2"></i> {% endcomment %}
+                                        Categories
                                     </a>
                                     <div class="dropdown-menu mega-dropdown-menu px-2 dropdown-mega-menu-lg" aria-labelledby="topnav-auth">
                                         <div class="row">
@@ -229,7 +233,8 @@
             
                                 <li class="nav-item dropdown mega-dropdown">
                                     <a class="nav-link dropdown-toggle arrow-none" href="#" id="topnav-uielement" role="button">
-                                        <i class="ti-info-alt me-2"></i>About
+                                        {% comment %} <i class="ti-info-alt me-2"></i> {% endcomment %}
+                                        About
                                     </a>
                                 </li>
                             </ul>
@@ -238,12 +243,12 @@
                             <ul class="navbar-nav">
                                 <li class="nav-item">
                                     <a class="nav-link" href="{% url 'users:login' %}">
-                                        <i class="ti-user me-2"></i>Login
+                                        Login
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="{% url 'users:register' %}">
-                                        <i class="ti-pencil-alt me-2"></i>Signup
+                                        <span class="bg-white py-2 px-3 sign_up rounded-pill">Signup</span>
                                     </a>
                                 </li>
                             </ul>
@@ -261,6 +266,16 @@
 
             {% endblock %}
             <!-- end main content-->
+            <footer class="footer">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-12">
+                            © <script>document.write(new Date().getFullYear())</script> InkWell
+                            <span class="d-none d-sm-inline-block"> - Crafted with <i class="mdi mdi-heart text-danger"></i> by Dansan.</span>
+                        </div>
+                    </div>
+                </div>
+            </footer>
 
         </div>
         <!-- END layout-wrapper -->
