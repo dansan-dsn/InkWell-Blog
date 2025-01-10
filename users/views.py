@@ -2,6 +2,8 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 from .serializers import UserSerializer
+from .models import User
+
 
 @api_view(['POST'])
 def register(request):
@@ -12,3 +14,31 @@ def register(request):
 
         return Response({'message': 'User registered successfully', 'data': serializer.data}, status=status.HTTP_201_CREATED)
     return Response({'error': 'Invalid data', 'details': serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['GET'])
+def all_users(request):
+    user = User.objects.all()
+    serializer = UserSerializer(user, many=True)
+    return Response({'data': serializer.data}, status=status.HTTP_200_OK)
+
+
+@api_view(['GET'])
+def get_user(request, pk):
+    try:
+        user = User.objects.get(pk=pk)
+        serializer = UserSerializer(user)
+        return Response({'data': serializer.data}, status=status.HTTP_200_OK)
+    except User.DoesNotExist:
+        return Response({"message": "User does not exist"}, status=status.HTTP_404_NOT_FOUND)
+
+
+@api_view(['DELETE'])
+def delete_user(request, pk):
+    try:
+        user = User.objects.get(pk=pk)
+        user.delete()
+        return Response({"message": "User deleted successfully"}, status=status.HTTP_200_OK)
+    except User.DoesNotExist:
+        return Response({"message": "User does not exist"}, status=status.HTTP_404_NOT_FOUND)
+
