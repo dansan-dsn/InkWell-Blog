@@ -52,35 +52,3 @@ class LoginSerializer(serializers.Serializer):
             raise serializers.ValidationError('Invalid username/email or password')
 
         return data
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
