@@ -1,7 +1,7 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
-from .serializers import UserSerializer, LoginSerializer
+from .serializers import UserSerializer, LoginSerializer, UserUpdateSerializer, ForgotPasswordSerializer, ChangeEmailSerializer
 from .models import User
 
 
@@ -42,6 +42,36 @@ def get_user(request, pk):
         return Response({'message': 'User does not exist'}, status=status.HTTP_404_NOT_FOUND)
 
 
+# update user details(username, role ( from guest to author))
+@api_view(['PUT'])
+def update_user(request, pk):
+    user = User.objects.get(pk=pk)
+    serializer = UserUpdateSerializer(user, data=request.data, partial=True)
+    if serializer.is_valid():
+        serializer.save()
+        return Response({'message':'User updated successfully'}, status=status.HTTP_200_OK)
+    return Response({'error': serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['POST'])
+def forgot_password(request):
+    serializer = ForgotPasswordSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response({'message': 'Password reset email sent.'}, status=200)
+    return Response(serializer.errors, status=400)
+
+
+@api_view(['PUT'])
+def change_email(request, pk):
+    user = User.objects.get(pk=pk)
+    serializer = ChangeEmailSerializer(user, data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response({'message': 'Email updated successfully'}, status=200)
+    return Response(serializer.errors, status=400)
+
+
 @api_view(['DELETE'])
 def delete_user(request, pk):
     try:
@@ -51,3 +81,11 @@ def delete_user(request, pk):
     except User.DoesNotExist:
         return Response({'message': 'User does not exist'}, status=status.HTTP_404_NOT_FOUND)
 
+
+# serializer = TaskSerializer(instance=Task, data=request.data)
+# update password
+# update email
+# change role from guest to author
+# use of mailer and OTP
+# notifying the older email and the new email.
+# check if the email, is a google email
