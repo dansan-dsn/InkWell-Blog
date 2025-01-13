@@ -27,8 +27,8 @@ def login(request):
 
 @api_view(['GET'])
 def all_users(request):
-    user = User.objects.all()
-    serializer = UserSerializer(user, many=True)
+    users = User.objects.all()
+    serializer = UserSerializer(users, many=True)
     return Response({'data': serializer.data}, status=status.HTTP_200_OK)
 
 
