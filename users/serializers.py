@@ -60,20 +60,23 @@ class UserUpdateSerializer(serializers.Serializer):
         username = value.get('username')
         role = value.get('role')
 
-        if User.objects.filter(username=username).exclude(id=self.instance.id).exists():
-            raise serializers.ValidationError("This username is already taken.")
+        if username:
+            if User.objects.filter(username=username).exclude(id=self.instance.id).exists():
+                raise serializers.ValidationError({"username":"This username is already taken."})
+            if len(username) < 3:
+                raise serializers.ValidationError({"username":"Username must be at least 3 characters long"})
 
-        if len(username) < 3:
-            raise serializers.ValidationError("Username must be at least 3 characters long")
-
-        allowed_role = ['author', 'guest']
-        if role not in allowed_role:
-            raise serializers.ValidationError("Role provided is not allowed")
+        if role:
+            allowed_role = ['author', 'guest']
+            if role not in allowed_role:
+                raise serializers.ValidationError({"role":"Role provided is not allowed"})
         return value
 
     def update(self, instance, validated_data):
-        instance.username = validated_data.get('username', instance.username)
-        instance.role = validated_data.get('role', instance.role)
+        if 'username' in validated_data:
+            instance.username = validated_data['username']
+        if 'role' in validated_data:
+            instance.role = validated_data['role']
 
         instance.save()
         return instance
@@ -82,7 +85,7 @@ class UserUpdateSerializer(serializers.Serializer):
 class ForgotPasswordSerializer(serializers.Serializer):
     email = serializers.EmailField()
 
-    def validate_email(self, value):
+    def validate(self, value):
         if not User.objects.filter(email=value).exists():
             raise serializers.ValidationError("No account is associated with this email.")
         return value
@@ -91,11 +94,7 @@ class ForgotPasswordSerializer(serializers.Serializer):
 class ChangeEmailSerializer(serializers.ModelSerializer):
     new_email = serializers.EmailField()
 
-    class Meta:
-        model = User
-        fields = ['new_email']
-
-    def validate_new_email(self, value):
+    def validate(self, value):
         """Validate the new email address."""
         if User.objects.filter(email=value).exists():
             raise serializers.ValidationError("This email is already in use.")

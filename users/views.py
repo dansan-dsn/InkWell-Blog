@@ -41,8 +41,6 @@ def get_user(request, pk):
     except User.DoesNotExist:
         return Response({'message': 'User does not exist'}, status=status.HTTP_404_NOT_FOUND)
 
-
-# update user details(username, role ( from guest to author))
 @api_view(['PUT'])
 def update_user(request, pk):
     user = User.objects.get(pk=pk)
