@@ -23,5 +23,7 @@ urlpatterns = [
     path('blog/', include('core.urls')),
     path('comments/', include('comments.urls')),
     path('categories/', include('categories.urls')),
+    path('reactions/', include('reactions.urls')),
+    # path('media/', include('media.urls')),
 ]
 

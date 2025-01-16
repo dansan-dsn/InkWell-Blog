@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     'core',
     'comments',
     'categories',
+    'reactions',
+    'media',
 ]
 
 MIDDLEWARE = [
