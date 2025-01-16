@@ -24,8 +24,8 @@ def get_all(request):
 @api_view(['GET'])
 def get_comment(request, pk):
     try:
-        comments = Comments.objects.get(pk=pk)
-        serializer = CommentSerializer(comments)
+        comment = Comments.objects.get(pk=pk)
+        serializer = CommentSerializer(comment)
         return Response({'data': serializer.data}, status=status.HTTP_200_OK)
     except Comments.DoesNotExist:
         return Response({'message': 'Comment does not exist'}, status=status.HTTP_404_NOT_FOUND)
@@ -34,8 +34,8 @@ def get_comment(request, pk):
 @api_view(['PUT'])
 def update_comment(request, pk):
     try:
-        comments = Comments.objects.get(pk=pk)
-        serializer = CommentSerializer(instance=comments, data=request.data)
+        comment = Comments.objects.get(pk=pk)
+        serializer = CommentSerializer(instance=comment, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response({'data': serializer.data}, status=status.HTTP_200_OK)
