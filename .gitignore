@@ -23,7 +23,7 @@ db.sqlite3
 
 # Static and media files (when they are generated locally)
 static/
-media/
+uploads/
 
 # Django log files
 *.log
